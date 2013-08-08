@@ -93,6 +93,6 @@
         <TemplateFile Template="$(FileTemplateNuSpec)" OutputFileName="$(FileNuSpec)" Tokens="@(NuSpecTokens)" />
         
         <!-- Run nuget -->
-        <NuGetPack NugetPath="$(FileNuGetExe)" File="$(FileNuSpec)" OutputDirectory="$(DirBuildDeploy)" ShouldBuildSymbols="false" />
+        <NuGetPack NugetPath="$(FileNuGetExe)" File="$(FileNuSpec)" OutputDirectory="$(DirBuildDeploy)" ShouldBuildSymbols="true" />
     </Target>
  </Project>
