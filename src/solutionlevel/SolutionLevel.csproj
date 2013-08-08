@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SolutionDir Condition="'$(SolutionDir)' == '' or '$(SolutionDir)' == '*undefined*'">$(MSBuildProjectDirectory)\..</SolutionDir>
+    <ProjectGuid>{B0B1C32A-53FC-4B7E-BA60-6DAFB8180A42}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>SolutionLevel</RootNamespace>
+    <AssemblyName>SolutionLevel</AssemblyName>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\BaseConfiguration.targets" />
+  <ItemGroup>
+    <EmbeddedResource Include="SolutionLevel.readme" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <!-- 
+       To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+    -->
+  <!--
+    <Target Name="BeforeBuild">
+    </Target>
+    -->
+  <!--
+    <Target Name="AfterBuild">
+    </Target>
+    -->
+  <PropertyGroup>
+    <DirWorkspace>$(SolutionDir)\..</DirWorkspace>
+    <DirTemplates>$(DirWorkspace)\templates</DirTemplates>
+    <DirTools>$(DirWorkspace)\tools</DirTools>
+    <DirPackages>$(DirWorkspace)\packages</DirPackages>
+    <DirBuild>$(DirWorkspace)\build</DirBuild>
+    <DirBuildTemp>$(DirBuild)\temp</DirBuildTemp>
+    <!-- File templates -->
+    <FileTemplateAssemblyVersion>$(DirTemplates)\AssemblyInfo.VersionNumber.cs.in</FileTemplateAssemblyVersion>
+    <FileTemplateAssemblyBuildInfo>$(DirTemplates)\AssemblyInfo.BuildInformation.cs.in</FileTemplateAssemblyBuildInfo>
+    <!-- Generated files -->
+    <FileGeneratedAssemblyVersion>$(DirBuildTemp)\AssemblyInfo.VersionNumber.cs</FileGeneratedAssemblyVersion>
+    <FileGeneratedAssemblyBuildInfo>$(DirBuildTemp)\AssemblyInfo.BuildInformation.cs</FileGeneratedAssemblyBuildInfo>
+    <FileGeneratedLicenses>$(DirBuildTemp)\licenses.xml</FileGeneratedLicenses>
+    <!-- Version number -->
+    <VersionMajor>0</VersionMajor>
+    <VersionMinor>0</VersionMinor>
+    <VersionBuild>0</VersionBuild>
+    <VersionRevision>0</VersionRevision>
+    <!-- Jenkins, the build system adds the BUILD_NUMBER environment variable so we can get that here -->
+    <BuildNumber>$(BUILD_NUMBER)</BuildNumber>
+    <BuildNumber Condition=" '$(BuildNumber)' == '' ">0</BuildNumber>
+    <!-- Todays dates -->
+    <Now>$([System.DateTime]::Now.ToString("o"))</Now>
+    <Year>$([System.DateTime]::Now.ToString("yyyy"))</Year>
+    <MsBuildExtensionsPath>$(DirTools)\msbuild.extensions</MsBuildExtensionsPath>
+  </PropertyGroup>
+  <Import Project="$(MsBuildExtensionsPath)\TemplateFile.msbuild" Condition="Exists('$(MsBuildExtensionsPath)\TemplateFile.msbuild')" />
+  <Import Project="$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild" Condition="Exists('$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild')" />
+  <Import Project="$(MsBuildExtensionsPath)\GitCommitHash.msbuild" Condition="Exists('$(MsBuildExtensionsPath)\GitCommitHash.msbuild')" />
+  <Import Project="$(MsBuildExtensionsPath)\PublicKeySignatureFromAssembly.msbuild" Condition="Exists('$(MsBuildExtensionsPath)\PublicKeySignatureFromAssembly.msbuild')" />
+  <Import Project="$(MsBuildExtensionsPath)\PublicKeySignatureFromKeyFile.msbuild" Condition="Exists('$(MsBuildExtensionsPath)\PublicKeySignatureFromKeyFile.msbuild')" />
+  <Import Project="$(DirWorkspace)\version.xml" Condition="Exists('$(DirWorkspace)\version.xml')" />
+  <Target Name="_PrepareBuildEnvironment">
+    <MakeDir Directories="$(DirBuild);" Condition="!Exists('$(DirBuild)')" />
+    <MakeDir Directories="$(DirBuildTemp)" Condition="!Exists('$(DirBuildTemp)')" />
+  </Target>
+  <!-- Clean up all the files we generate ourselves -->
+  <PropertyGroup>
+    <CleanDependsOn>
+            CleanGeneratedFiles;
+            $(CleanDependsOn);
+        </CleanDependsOn>
+  </PropertyGroup>
+  <Target Name="CleanGeneratedFiles">
+    <ItemGroup>
+      <GeneratedFiles Include="$(FileGeneratedAssemblyVersion)" />
+      <GeneratedFiles Include="$(FileGeneratedAssemblyBuildInfo)" />
+      <GeneratedFiles Include="$(FileGeneratedLicenses)" />
+    </ItemGroup>
+    <Delete Files="@(GeneratedFiles)" />
+  </Target>
+  <!-- Just before we start building we'll generate the AssemblyInfo.XX.cs files-->
+  <PropertyGroup>
+    <BuildDependsOn>
+            GenerateAssemblyInfoVersionNumber;
+            GenerateAssemblyInfoBuildInfo;
+            $(BuildDependsOn);
+        </BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="GenerateAssemblyInfoVersionNumber" DependsOnTargets="_PrepareBuildEnvironment">
+    <!-- Generate the version number file -->
+    <ItemGroup>
+      <VersionTokens Include="Major">
+        <ReplacementValue>$(VersionMajor)</ReplacementValue>
+      </VersionTokens>
+      <VersionTokens Include="Minor">
+        <ReplacementValue>$(VersionMinor)</ReplacementValue>
+      </VersionTokens>
+      <VersionTokens Include="Build">
+        <ReplacementValue>$(VersionBuild)</ReplacementValue>
+      </VersionTokens>
+      <VersionTokens Include="Revision">
+        <ReplacementValue>$(VersionRevision)</ReplacementValue>
+      </VersionTokens>
+    </ItemGroup>
+    <TemplateFile Template="$(FileTemplateAssemblyVersion)" OutputFileName="$(FileGeneratedAssemblyVersion)" Tokens="@(VersionTokens)" />
+  </Target>
+  <Target Name="GenerateAssemblyInfoBuildInfo" DependsOnTargets="_PrepareBuildEnvironment">
+    <GitCommitHash LocalPath="$(DirWorkspace)">
+      <Output TaskParameter="RevNo" PropertyName="VcsRevision" />
+    </GitCommitHash>
+    <ItemGroup>
+      <BuildInfoTokens Include="CopyrightYear">
+        <ReplacementValue>$(Year)</ReplacementValue>
+      </BuildInfoTokens>
+      <BuildInfoTokens Include="Configuration">
+        <ReplacementValue>$(Configuration)</ReplacementValue>
+      </BuildInfoTokens>
+      <BuildInfoTokens Include="BuildTime">
+        <ReplacementValue>$(Now)</ReplacementValue>
+      </BuildInfoTokens>
+      <BuildInfoTokens Include="BuildNumber">
+        <ReplacementValue>$(BuildNumber)</ReplacementValue>
+      </BuildInfoTokens>
+      <BuildInfoTokens Include="VcsRevision">
+        <ReplacementValue>$(VcsRevision)</ReplacementValue>
+      </BuildInfoTokens>
+    </ItemGroup>
+    <TemplateFile Template="$(FileTemplateAssemblyBuildInfo)" OutputFileName="$(FileGeneratedAssemblyBuildInfo)" Tokens="@(BuildInfoTokens)" />
+  </Target>
+  <PropertyGroup>
+    <FileNTrevaExe>ntreva.exe</FileNTrevaExe>
+    <BuildDependsOn>
+            GenerateLicenses;
+            $(BuildDependsOn);
+        </BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="GenerateLicenses" Condition="!Exists('$(FileGeneratedLicenses)')" DependsOnTargets="_PrepareBuildEnvironment">
+    <FindToolFromPackages PackagesDir="$(DirPackages)" FileToLocate="$(FileNTrevaExe)">
+      <Output TaskParameter="Path" PropertyName="PathNTrevaExe" />
+    </FindToolFromPackages>
+    <ItemGroup>
+      <SolutionPackages Include="$(SolutionDir)\**\packages.config" />
+    </ItemGroup>
+    <Exec Command="&quot;$(PathNTrevaExe)&quot; -p &quot;$(DirPackages)&quot; -o &quot;$(FileGeneratedLicenses)&quot; @(SolutionPackages-> '-c &quot;%(RootDir)%(Directory)\&quot;', ' ')" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+</Project>

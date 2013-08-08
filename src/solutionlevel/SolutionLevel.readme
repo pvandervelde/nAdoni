@@ -1,0 +1,2 @@
+This project here to execute solution level actions. Examples of that are the getting the packages necessary
+for the generation of the license xml file, generating the differen AssemblyInfo.XX.cs files etc. 
