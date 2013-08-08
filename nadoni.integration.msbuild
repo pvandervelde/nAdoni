@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0"
+         DefaultTargets="Run"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <!-- Build flags -->
+        <ShouldClean>true</ShouldClean>
+        <ShouldHaveCoverage>true</ShouldHaveCoverage>
+        <ShouldCleanPackages>true</ShouldCleanPackages>
+        
+        <!-- Build configuration -->
+        <Platform Condition=" '$(Platform)' == ''">Any CPU</Platform>
+        
+        <!-- Directories -->
+        <DirWorkspace>$(MSBuildProjectDirectory)</DirWorkspace>
+    </PropertyGroup>
+    
+    <Target Name="Run" DependsOnTargets="_PrepareWorkspace;_BuildBinaries;_PackageNuget;_PackageArchive">
+        <!-- Do nothing here -->
+    </Target>
+    
+    <!-- Display info -->
+    <Target Name="_DisplayInfo">
+        <Message Text="Building nAdoni ..." />
+    </Target>
+    
+    <!-- Clean -->
+    <PropertyGroup>
+        <MsBuildPrepareWorkspace>$(DirWorkspace)\nadoni.PrepareWorkspace.msbuild</MsBuildPrepareWorkspace>
+    </PropertyGroup>
+    <Target Name="_PrepareWorkspace" DependsOnTargets="_DisplayInfo">
+        <MSBuild Projects="$(MsBuildPrepareWorkspace)" Properties="ShouldClean=$(ShouldClean);ShouldCleanPackages=$(ShouldCleanPackages)" />
+    </Target>
+    
+    <!-- Build binaries -->
+    <PropertyGroup>
+        <MsBuildBuildBinaries>$(DirWorkspace)\nadoni.Build.Binaries.msbuild</MsBuildBuildBinaries>
+    </PropertyGroup>
+    <Target Name="_BuildBinaries" DependsOnTargets="_PrepareWorkspace">
+        <MSBuild Projects="$(MsBuildBuildBinaries)" Properties="Configuration=Release;Platform=$(Platform)" />
+        <MSBuild Projects="$(MsBuildBuildBinaries)" Properties="Configuration=Deploy;Platform=$(Platform)" />
+    </Target>
+    
+    <!-- Build NuGet packages -->
+    <PropertyGroup>
+        <MsBuildPackageNuGet>$(DirWorkspace)\nadoni.Package.NuGet.msbuild</MsBuildPackageNuGet>
+    </PropertyGroup>
+    <Target Name="_PackageNuGet" DependsOnTargets="_BuildBinaries">
+        <MSBuild Projects="$(MsBuildPackageNuGet)" Properties="Configuration=Deploy;Platform=$(Platform)" />
+    </Target>
+
+    <!-- Build archives -->
+    <PropertyGroup>
+        <MsBuildPackageArchive>$(DirWorkspace)\nadoni.Package.Archive.msbuild</MsBuildPackageArchive>
+    </PropertyGroup>
+    <Target Name="_PackageArchive" DependsOnTargets="_BuildBinaries">
+        <MSBuild Projects="$(MsBuildPackageArchive)" Properties="Configuration=Deploy;Platform=$(Platform)" />
+    </Target>
+</Project>

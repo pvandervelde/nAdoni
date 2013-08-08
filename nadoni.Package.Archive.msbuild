@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0"
+         DefaultTargets="Run"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <!-- Build configuration -->
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+        <Platform Condition=" '$(Platform)' == ''">Any CPU</Platform>
+        <PlatformTranslated>$(Platform.Replace(" ",""))</PlatformTranslated>
+    
+        <!-- Directories -->
+        <DirWorkspace>$(MSBuildProjectDirectory)</DirWorkspace>
+        <DirPackages>$(DirWorkspace)\packages</DirPackages>
+        <DirTools>$(DirWorkspace)\tools</DirTools>
+        <DirBuild>$(DirWorkspace)\build</DirBuild>
+        <DirBuildBin>$(DirBuild)\bin\$(PlatformTranslated)\$(Configuration)</DirBuildBin>
+        <DirBuildDeploy>$(DirBuild)\deploy</DirBuildDeploy>
+        <DirInstall>$(DirWorkspace)\install</DirInstall>
+        <DirInstallArchive>$(DirInstall)\archive</DirInstallArchive>
+        
+        <!-- Version number -->
+        <VersionMajor>0</VersionMajor>
+        <VersionMinor>0</VersionMinor>
+        <VersionBuild>0</VersionBuild>
+        <VersionRevision>0</VersionRevision>
+        
+        <!-- Tools -->
+        <MsBuildExtensionsPath>$(DirTools)\msbuild.extensions</MsBuildExtensionsPath>
+    </PropertyGroup>
+    
+    <Import Project="$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild" 
+            Condition="Exists('$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild')" />
+    <Import Project="$(MsBuildExtensionsPath)\Zip.msbuild"
+            Condition="Exists('$(MsBuildExtensionsPath)\Zip.msbuild')"/>
+            
+    <Import Project="$(DirWorkspace)\version.xml" 
+            Condition="Exists('$(DirWorkspace)\version.xml')" />
+    
+    <Target Name="Run" DependsOnTargets="_DisplayInfo;_BuildPackages">
+        <!-- Do nothing here -->
+    </Target>
+    
+    <!-- Display info -->
+    <Target Name="_DisplayInfo">
+        <Message Text="Creating zip packages..." />
+    </Target>
+    
+    <PropertyGroup>
+        <FileNameArchive>nadoni.zip</FileNameArchive>
+        <FileArchive>$(DirBuildDeploy)\$(FileNameArchive)</FileArchive>
+    </PropertyGroup>
+    <Target Name="_BuildPackages" DependsOnTargets="_DisplayInfo">
+        <MakeDir Directories="$(DirBuildDeploy)" Condition="!Exists('$(DirBuildDeploy)')" />
+    
+        <ItemGroup Condition="'$(DirBuildBin)' != ''">
+            <ServiceFiles Include="$(DirBuildBin)\Autofac.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\Autofac.Configuration.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\Lokad.Shared.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\NLog.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\Nuclei.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\Nuclei.Build.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\Nuclei.Configuration.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\Nuclei.Diagnostics.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\QuickGraph.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\nAdoni.dll" />
+            <ServiceFiles Include="$(DirBuildBin)\nAdoni.ManifestBuilder.exe" />
+            <ServiceFiles Include="$(DirBuildBin)\nAdoni.ManifestBuilder.exe.config" />
+            <ServiceFiles Include="$(DirWorkspace)\LICENSE.md" />
+        </ItemGroup>
+    
+        <Message Text="Compressing files" />
+        <Zip InputFileNames="@(ServiceFiles)"
+             OutputFileName="$(FileArchive)"
+             OverwriteExistingFile="true" />
+    </Target>
+ </Project>
