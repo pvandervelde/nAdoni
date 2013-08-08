@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>nAdoni</id>
+    <version>${Version}</version>
+    <authors>P. van der Velde</authors>
+    <owners>P. van der Velde</owners>
+    <licenseUrl>http://opensource.org/licenses/ms-pl</licenseUrl>
+    <projectUrl>https://github.com/pvandervelde/nAdoni</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+        A library that provides download and install capability of archives based on an update feed describing
+        the new archives. This library can be used as the basis for auto-updating applications.
+    </description>
+    <releaseNotes>
+      ${ReleaseNotes}
+    </releaseNotes>
+    <dependencies>
+      ${Dependencies}
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="${DirBin}\nAdoni.dll" target="lib\net45" />
+    <file src="${DirBin}\nAdoni.pdb" target="lib\net45" />
+    <file src="${DirBin}\nAdoni.xml" target="lib\net45" />
+    <file src="${DirSrc}\nAdoni\**\*.cs" target="src\nAdoni" />
+  </files>
+</package>
