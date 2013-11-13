@@ -166,7 +166,7 @@
     <value>v=|ProductVersion=</value>
   </data>
   <data name="Header_ApplicationAndVersion" xml:space="preserve">
-    <value>Nuclei AutoUpdate manifest builder ({0})</value>
+    <value>nAdoni AutoUpdate manifest builder ({0})</value>
   </data>
   <data name="Header_OtherPackages_IdAndLicense" xml:space="preserve">
     <value>        {0} (version: {1}). For more information see: {2}</value>
@@ -175,7 +175,7 @@
     <value>This application makes use of the following open source software:</value>
   </data>
   <data name="Help_Usage_Intro" xml:space="preserve">
-    <value>Usage: apollo.UI.console.exe [OPTIONS]</value>
+    <value>Usage: nadoni.manifestbuilder.exe [OPTIONS]</value>
   </data>
   <data name="Log_Error_InvalidInputParameters_WithException" xml:space="preserve">
     <value>Unable to parse the input parameters. Exception was: {0}</value>
