@@ -220,7 +220,7 @@ namespace NAdoni.ManifestBuilder
             try
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(errorText);
+                Console.Error.WriteLine(errorText);
             }
             finally
             {
