@@ -131,8 +131,6 @@ namespace NAdoni.ManifestBuilder
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes",
-            Justification = "We're just catching and then exiting the app.")]
         private static int RunApplication(IEnumerable<string> args)
         {
             try
