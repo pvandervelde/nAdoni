@@ -36,7 +36,7 @@
     <Import Project="$(DirWorkspace)\version.xml" 
             Condition="Exists('$(DirWorkspace)\version.xml')" />
     
-    <Target Name="Run" DependsOnTargets="_DisplayInfo;_BuildPackages">
+    <Target Name="Run" DependsOnTargets="_DisplayInfo;_BuildKeyGeneratorPackage;_BuildManifestBuilderPackage">
         <!-- Do nothing here -->
     </Target>
     
@@ -46,31 +46,55 @@
     </Target>
     
     <PropertyGroup>
-        <FileNameArchive>nadoni.zip</FileNameArchive>
-        <FileArchive>$(DirBuildDeploy)\$(FileNameArchive)</FileArchive>
+        <FileNameKeyGeneratorArchive>nadoni.keygenerator.zip</FileNameKeyGeneratorArchive>
+        <FileKeyGeneratorArchive>$(DirBuildDeploy)\$(FileNameKeyGeneratorArchive)</FileKeyGeneratorArchive>
     </PropertyGroup>
-    <Target Name="_BuildPackages" DependsOnTargets="_DisplayInfo">
+    <Target Name="_BuildKeyGeneratorPackage" DependsOnTargets="_DisplayInfo">
         <MakeDir Directories="$(DirBuildDeploy)" Condition="!Exists('$(DirBuildDeploy)')" />
     
         <ItemGroup Condition="'$(DirBuildBin)' != ''">
-            <ServiceFiles Include="$(DirBuildBin)\Autofac.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\Autofac.Configuration.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\Lokad.Shared.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\NLog.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\Nuclei.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\Nuclei.Build.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\Nuclei.Configuration.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\Nuclei.Diagnostics.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\QuickGraph.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\nAdoni.dll" />
-            <ServiceFiles Include="$(DirBuildBin)\nAdoni.ManifestBuilder.exe" />
-            <ServiceFiles Include="$(DirBuildBin)\nAdoni.ManifestBuilder.exe.config" />
-            <ServiceFiles Include="$(DirWorkspace)\LICENSE.md" />
+            <KeyGeneratorFiles Include="$(DirBuildBin)\Lokad.Shared.dll" />
+            <KeyGeneratorFiles Include="$(DirBuildBin)\Nuclei.dll" />
+            <KeyGeneratorFiles Include="$(DirBuildBin)\Nuclei.Build.dll" />
+            <KeyGeneratorFiles Include="$(DirBuildBin)\nAdoni.KeyGenerator.exe" />
+            <KeyGeneratorFiles Include="$(DirBuildBin)\nAdoni.KeyGenerator.exe.config" />
+            <KeyGeneratorFiles Include="$(DirWorkspace)\LICENSE.md" />
+            <KeyGeneratorFiles Include="$(DirWorkspace)\README.md" />
         </ItemGroup>
     
-        <Message Text="Compressing files" />
-        <Zip InputFileNames="@(ServiceFiles)"
-             OutputFileName="$(FileArchive)"
+        <Message Text="Compressing KeyGenerator files" />
+        <Zip InputFileNames="@(KeyGeneratorFiles)"
+             OutputFileName="$(FileKeyGeneratorArchive)"
+             OverwriteExistingFile="true" />
+    </Target>
+    
+    <PropertyGroup>
+        <FileNameManifestBuilderArchive>nadoni.manifestbuilder.zip</FileNameManifestBuilderArchive>
+        <FileManifestBuilderArchive>$(DirBuildDeploy)\$(FileNameManifestBuilderArchive)</FileManifestBuilderArchive>
+    </PropertyGroup>
+    <Target Name="_BuildManifestBuilderPackage" DependsOnTargets="_DisplayInfo">
+        <MakeDir Directories="$(DirBuildDeploy)" Condition="!Exists('$(DirBuildDeploy)')" />
+    
+        <ItemGroup Condition="'$(DirBuildBin)' != ''">
+            <ManifestBuilderFiles Include="$(DirBuildBin)\Autofac.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\Autofac.Configuration.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\Lokad.Shared.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\NLog.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\Nuclei.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\Nuclei.Build.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\Nuclei.Configuration.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\Nuclei.Diagnostics.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\QuickGraph.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\nAdoni.dll" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\nAdoni.ManifestBuilder.exe" />
+            <ManifestBuilderFiles Include="$(DirBuildBin)\nAdoni.ManifestBuilder.exe.config" />
+            <ManifestBuilderFiles Include="$(DirWorkspace)\LICENSE.md" />
+            <ManifestBuilderFiles Include="$(DirWorkspace)\README.md" />
+        </ItemGroup>
+    
+        <Message Text="Compressing ManifestBuilder files" />
+        <Zip InputFileNames="@(ManifestBuilderFiles)"
+             OutputFileName="$(FileManifestBuilderArchive)"
              OverwriteExistingFile="true" />
     </Target>
  </Project>
