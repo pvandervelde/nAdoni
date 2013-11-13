@@ -97,7 +97,7 @@ namespace NAdoni.KeyGenerator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file paths of the file that will hold the {PUBLIC} and {PRIVATE} keys..
+        ///   Looks up a localized string similar to The file paths of the file that will hold the {PRIVATE} and public keys..
         /// </summary>
         internal static string CommandLine_Options_PrivatePath_Description {
             get {

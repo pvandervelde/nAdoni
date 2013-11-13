@@ -130,7 +130,7 @@
     <value>s|keysize:</value>
   </data>
   <data name="CommandLine_Options_PrivatePath_Description" xml:space="preserve">
-    <value>The file paths of the file that will hold the {PUBLIC} and {PRIVATE} keys.</value>
+    <value>The file paths of the file that will hold the {PRIVATE} and public keys.</value>
   </data>
   <data name="CommandLine_Options_PrivatePath_Key" xml:space="preserve">
     <value>i|private=</value>
