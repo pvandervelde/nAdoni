@@ -12,49 +12,49 @@
   <Import Project="$(SolutionDir)\BaseConfiguration.targets" />
   <ItemGroup>
     <Reference Include="Autofac">
-      <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.0.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Autofac.Configuration">
-      <HintPath>..\packages\Autofac.3.0.2\lib\net40\Autofac.Configuration.dll</HintPath>
+      <HintPath>..\..\packages\Autofac.3.0.2\lib\net40\Autofac.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Lokad.ActionPolicy">
-      <HintPath>..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.ActionPolicy.dll</HintPath>
+      <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.ActionPolicy.dll</HintPath>
     </Reference>
     <Reference Include="Lokad.Logging">
-      <HintPath>..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Lokad.Quality">
-      <HintPath>..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Quality.dll</HintPath>
+      <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Quality.dll</HintPath>
     </Reference>
     <Reference Include="Lokad.Shared">
-      <HintPath>..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Shared.dll</HintPath>
+      <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Lokad.Stack">
-      <HintPath>..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Stack.dll</HintPath>
+      <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Stack.dll</HintPath>
     </Reference>
     <Reference Include="Lokad.Testing">
-      <HintPath>..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Testing.dll</HintPath>
+      <HintPath>..\..\packages\Lokad.Shared.1.5.181.0\lib\Lokad.Testing.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb">
       <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+      <HintPath>..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="Nuclei">
-      <HintPath>..\packages\Nuclei.0.6.0.0\lib\net45\Nuclei.dll</HintPath>
+      <HintPath>..\..\packages\Nuclei.0.6.0.0\lib\net45\Nuclei.dll</HintPath>
     </Reference>
     <Reference Include="Nuclei.Build, Version=0.6.0.0, Culture=neutral, PublicKeyToken=665f4d61f853b5a9, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nuclei.Build.0.6.0.0\lib\net45\Nuclei.Build.dll</HintPath>
+      <HintPath>..\..\packages\Nuclei.Build.0.6.0.0\lib\net45\Nuclei.Build.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
