@@ -2,10 +2,47 @@
 
 nAdoni is a library that provides a way to check for updates to one or more binaries via an update manifest, and then to download an archive containing the updated binaries. 
 
-The manifest file is an XML file which is signed with an RSA key to provide some form of security in the update process. 
+The manifest file is an XML file which is signed with a RSA key to provide some form of security in the update process. 
 
 # Setup
 
+### Create a key file:
+
+In order to create the manifest files a RSA key is needed. The complete RSA key needs to be provided to both the manifest generator and the public part of the RSA key needs to be provided when the manifest is parsed.
+
+A RSA private key file contains the following information:
+
+	``` xml
+	<RSAKeyValue>
+	    <Modulus>MODULUS_VALUE_HERE</Modulus>
+	    <Exponent>EXPONENT_VALUE_HERE</Exponent>
+	    <P>P_VALUE_HERE</P>
+	    <Q>Q_VALUE_HERE</Q>
+	    <DP>DP_VALUE_HERE</DP>
+	    <DQ>DQ_VALUE_HERE</DQ>
+	    <InverseQ>INVERSE_Q_VALUE_HERE</InverseQ>
+	    <D>D_VALUE_HERE</D>
+	</RSAKeyValue>
+	```
+
+A RSA public key file contains the following information:
+
+	``` xml
+	<RSAKeyValue>
+	    <Modulus>MODULUS_VALUE_HERE</Modulus>
+	    <Exponent>EXPONENT_VALUE_HERE</Exponent>
+	</RSAKeyValue>
+	```
+	
+These kinds of files can be written with the `nAdoni.KeyGenerator` executable by executing the following command line:
+    
+    nAdoni.KeyGenerator.exe --private=<FILE-PATH-PRIVATE-OUTPUT> --public=<FILE-PATH-PUBLIC-OUTPUT> --keysize=<KEYSIZE>
+
+Where:
+* __FILE-PATH-PRIVATE-OUTPUT__ - The full path to the XML file that contains the public and private parts of the key.
+* __FILE-PATH-PUBLIC-OUTPUT__ - The full path to the XML file that contains only the public part of the key.
+* __KEYSIZE__ - The size of the key, defaults to 2048 bits.
+    
 ### Create a manifest file:
 
 * Create an archive file that contains all the files that should be part of the update.
@@ -21,51 +58,7 @@ The manifest file is an XML file which is signed with an RSA key to provide some
  * __SIGNING-FILE-PATH__ - The full path to the RSA private key file with which the manifest file should be signed. This parameter does not need to be provided if a key container name is provided.
  * __SIGNING-KEY-CONTAINER-NAME__ - The name of the key container that contains the private key with which the manifest file should be signed. This parameter does not need to be provided if a key file path is provided.
  * __OUTPUT-PATH__ - The full path to the location where the output file should be placed.
-
-	A RSA private key file contains the following information:
-
-	``` xml
-	<RSAKeyValue>
-	    <Modulus>MODULUS_VALUE_HERE</Modulus>
-	    <Exponent>EXPONENT_VALUE_HERE</Exponent>
-	    <P>P_VALUE_HERE</P>
-	    <Q>Q_VALUE_HERE</Q>
-	    <DP>DP_VALUE_HERE</DP>
-	    <DQ>DQ_VALUE_HERE</DQ>
-	    <InverseQ>INVERSE_Q_VALUE_HERE</InverseQ>
-	    <D>D_VALUE_HERE</D>
-	</RSAKeyValue>
-	```
 	
-	This kind of file can be written with the following code
-	
-	``` c#
-		using (var rsa = new RSACryptoServiceProvider(s_KeySize))
-	    {
-	        try
-	        {
-	            // Write the public key file
-	            using (var writer = new StreamWriter(new FileStream(s_PublicKeyFile, FileMode.Create, FileAccess.Write, FileShare.None)))
-	            {
-	                var publicKeyXml = rsa.ToXmlString(false);
-	                writer.Write(publicKeyXml);
-	            }
-	
-	            // Write the privat key file
-	            using (var writer = new StreamWriter(new FileStream(s_PrivateKeyFile, FileMode.Create, FileAccess.Write, FileShare.None)))
-	            {
-	                var privateKeyXml = rsa.ToXmlString(true);
-	                writer.Write(privateKeyXml);
-	            }
-	        }
-	        finally
-	        {
-	            // Make sure we're not storing this key in the machine container.
-	            rsa.PersistKeyInCsp = false;
-	        }
-	    }
-	```
-
 ### In the application
 
 ``` c#
@@ -100,7 +93,7 @@ The solution files are created in Visual Studio 2012 (using .NET 4.5) and the en
 Note that the build scripts assume that:
 
 * The binaries should be signed, however the SNK key file is not included in the repository so a new key file has to be [created][snkfile_msdn]. The key file is referenced through an environment variable called `SOFTWARE_SIGNING_KEY_PATH` that has as value the full path of the key file. 
-* GIT can be found on the PATH somewhere so that it can be called to get the hash of the last commit in the current repository. This hash is embedded in the nuclei assemblies together with information about the build configuration and build time and date.
+* GIT can be found on the PATH somewhere so that it can be called to get the hash of the last commit in the current repository. This hash is embedded in the nAdoni assemblies together with information about the build configuration and build time and date.
 
 # Origin
 This code of nAdoni is based on the code for an [simple auto-update library for WPF applications](http://blogs.msdn.com/b/dotnetinterop/archive/2008/03/28/simple-auto-update-for-wpf-apps.aspx) which is licensed under the [Ms-PL license](http://opensource.org/licenses/ms-pl).
