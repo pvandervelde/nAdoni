@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionLevel", "solutionlevel\SolutionLevel.csproj", "{B0B1C32A-53FC-4B7E-BA60-6DAFB8180A42}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FA1C5295-F768-49E5-94B9-981C4C7D7F8A}"
@@ -54,8 +52,8 @@ Global
 		{85D035C4-146E-45F0-84C6-0CD2F8BDAB93}.Release|Any CPU.Build.0 = Release|Any CPU
 		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
-		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
+		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
 		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88974A1C-A947-4AB4-B7D9-C1433707AA22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
