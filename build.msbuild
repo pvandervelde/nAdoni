@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0"
+         DefaultTargets="Run"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <!-- Build flags -->
+        <ShouldClean>true</ShouldClean>
+        
+        <!-- Directories -->
+        <DirWorkspace>$(MSBuildProjectDirectory)</DirWorkspace>
+        <DirBuild>$(DirWorkspace)\build</DirBuild>
+        <DirBuildDeploy>$(DirBuild)\deploy</DirBuildDeploy>
+        <DirBuildLogs>$(DirBuild)\logs</DirBuildLogs>
+        <DirBuildTemp>$(DirBuild)\temp</DirBuildTemp>
+        <DirPackages>$(DirWorkspace)\packages</DirPackages>
+        <DirSrc>$(DirWorkspace)\src</DirSrc>
+        <DirTools>$(DirWorkspace)\tools</DirTools>
+        
+        <MsBuildExtensionsPath>$(DirTools)\msbuild.extensions</MsBuildExtensionsPath>
+    </PropertyGroup>
+    
+    <Import Project="$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild" 
+            Condition="Exists('$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild')" />
+
+    <Target Name="Run" DependsOnTargets="_Clean;_CopySourceFiles;_BuildSite">
+        <!-- Do nothing here -->
+    </Target>
+    
+    <Target Name="_DisplayInfo">
+        <Message Text="Building nAdoni website ..." />
+    </Target>
+    
+    <Target Name="_Clean" DependsOnTargets="_DisplayInfo" Condition="$(ShouldClean)">
+        <!-- 
+            Don't try to delete the directory because that fails randomly because
+            some file is being locked. This then leads to a failing task, but ..
+            the next task is run and then the delete command still executes (delayed 
+            by the OS). Unfortunately the next task is the task that puts the directories
+            back ...
+        -->
+        <ItemGroup>
+            <BuildFilesToDelete Include="$(DirBuild)\**\*.*"/>
+        </ItemGroup>
+        <Delete Files="@(BuildFilesToDelete)" />
+    </Target>
+    
+    <!-- copy files to temp/src -->
+    <PropertyGroup>
+        <DirBuildTempSrc>$(DirBuildTemp)\src</DirBuildTempSrc>
+    </PropertyGroup>
+    <Target Name="_CopySourceFiles" DependsOnTargets="_DisplayInfo;_Clean;">
+        <MakeDir Directories="$(DirBuildTemp)" Condition="!Exists('$(DirBuildTemp)')" />
+        
+        <ItemGroup>
+            <SrcFiles Include="$(DirSrc)\**\*.*" />
+        </ItemGroup>
+        
+        <Copy SourceFiles="@(SrcFiles)" 
+              DestinationFolder="$(DirBuildTempSrc)\%(RecursiveDir)" />
+    </Target>
+    
+    <!-- Pull wiki to temp/wiki-src -->
+    
+    <!-- Copy wiki files to temp/src/pages/wiki -->
+    
+    <!-- Generate API documentation files in temp/src/pages/api -->
+    
+    <!-- Generate site -->
+    <PropertyGroup>
+        <FileChampAppExe>champ-app.exe</FileChampAppExe>
+    </PropertyGroup>
+    <Target Name="_BuildSite" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles">
+        <FindToolFromPackages PackagesDir="$(DirPackages)" FileToLocate="$(FileChampAppExe)">
+          <Output TaskParameter="Path" PropertyName="PathChampAppExe" />
+        </FindToolFromPackages>
+        
+        <Exec Command="$(PathChampAppExe) $(DirBuildTempSrc) $(DirBuildDeploy)"
+              WorkingDirectory="$(DirBuildTempSrc)" />
+    </Target>
+</Project>
