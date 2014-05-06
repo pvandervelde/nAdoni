@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="nAdoni, a library that provides a way to check for updates to one or more binaries via an update manifest.">
+    <meta name="author" content="">
+
+    <title>nAdoni | @Model.Page.Title</title>
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href="@ResolveUrl("static/css/print.css")" rel="stylesheet" type="text/css" media="print" />
+    <link href="@ResolveUrl("static/css/stylesheet.css")" rel="stylesheet" type="text/css" media="screen" />
+    <link href="@ResolveUrl("static/css/pygment_trac.css")" rel="stylesheet" type="text/css" media="screen" />
+    <script src="@ResolveUrl("static/scripts/main.js")"></script>
+</head>
+<body>
+    <header>
+        <div class="inner">
+            <h1>Nadoni</h1>
+            <h2>nAdoni is a library that provides a way to check for updates to one or more binaries via an update manifest, and then to download an archive containing the updated binaries.</h2>
+            <a href="https://github.com/pvandervelde/nAdoni" class="button"><small>View project on</small>GitHub</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div id="content-wrapper">
+        <div class="inner clearfix">
+            <!-- Nav Bar -->
+            @Include("navbar")
+
+            <section id="main-content">
+                <h1>@Model.Page.Title</h1>
+
+                @RenderBody()
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    @Include("footer")
+</body>
+</html>
