@@ -12,6 +12,7 @@
         <DirBuildDeploy>$(DirBuild)\deploy</DirBuildDeploy>
         <DirBuildLogs>$(DirBuild)\logs</DirBuildLogs>
         <DirBuildTemp>$(DirBuild)\temp</DirBuildTemp>
+        <DirBuildTempWiki>$(DirBuildTemp)\wiki</DirBuildTempWiki>
         <DirPackages>$(DirWorkspace)\packages</DirPackages>
         <DirSrc>$(DirWorkspace)\src</DirSrc>
         <DirTools>$(DirWorkspace)\tools</DirTools>
@@ -43,7 +44,8 @@
             back ...
         -->
         <ItemGroup>
-            <BuildFilesToDelete Include="$(DirBuild)\**\*.*"/>
+            <BuildFilesToDelete Include="$(DirBuild)\**\*.*"
+                                Exclude="$(DirBuildTempWiki)\**\*.*"/>
         </ItemGroup>
         <Delete Files="@(BuildFilesToDelete)" />
     </Target>
@@ -65,11 +67,11 @@
     
     <PropertyGroup>
         <ExeGit Condition=" '$(ExeGit)' == '' ">git.exe</ExeGit>
-        <DirBuildTempWiki>$(DirBuildTemp)\wiki</DirBuildTempWiki>
     </PropertyGroup>
-    <Target Name="_RetrieveWikiSource" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles" Condition="!Exists('$()')">
+    <Target Name="_RetrieveWikiSource" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles" Condition="!Exists('$(DirBuildTempWiki)')">
         <Exec Command="&quot;$(ExeGit)&quot; clone $(GitRepositoryWiki) $(DirBuildTempWiki)"
               WorkingDirectory="$(DirBuildTemp)" />
+        <RemoveDir Directories="$(DirBuildTempWiki)\.git" />
               
         <ItemGroup>
             <WikiFiles Include="$(DirBuildTempWiki)\**\*.*"
