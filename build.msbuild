@@ -16,13 +16,17 @@
         <DirSrc>$(DirWorkspace)\src</DirSrc>
         <DirTools>$(DirWorkspace)\tools</DirTools>
         
+        <GitRepositoryWiki Condition=" '$(GitRepositoryWiki)' == '' ">https://github.com/pvandervelde/nAdoni.wiki.git</GitRepositoryWiki>
+        
         <MsBuildExtensionsPath>$(DirTools)\msbuild.extensions</MsBuildExtensionsPath>
     </PropertyGroup>
     
     <Import Project="$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild" 
             Condition="Exists('$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild')" />
+    <Import Project="$(MsBuildExtensionsPath)\Unzip.msbuild" 
+            Condition="Exists('$(MsBuildExtensionsPath)\Unzip.msbuild')" />
 
-    <Target Name="Run" DependsOnTargets="_Clean;_CopySourceFiles;_BuildSite">
+    <Target Name="Run" DependsOnTargets="_Clean;_CopySourceFiles;_RetrieveWikiSource;_BuildSite">
         <!-- Do nothing here -->
     </Target>
     
@@ -59,9 +63,22 @@
               DestinationFolder="$(DirBuildTempSrc)\%(RecursiveDir)" />
     </Target>
     
-    <!-- Pull wiki to temp/wiki-src -->
-    
-    <!-- Copy wiki files to temp/src/pages/wiki -->
+    <PropertyGroup>
+        <ExeGit Condition=" '$(ExeGit)' == '' ">git.exe</ExeGit>
+        <DirBuildTempWiki>$(DirBuildTemp)\wiki</DirBuildTempWiki>
+    </PropertyGroup>
+    <Target Name="_RetrieveWikiSource" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles" Condition="!Exists('$()')">
+        <Exec Command="&quot;$(ExeGit)&quot; clone $(GitRepositoryWiki) $(DirBuildTempWiki)"
+              WorkingDirectory="$(DirBuildTemp)" />
+              
+        <ItemGroup>
+            <WikiFiles Include="$(DirBuildTempWiki)\**\*.*"
+                       Exclude="$(DirBuildTempWiki)\.git\**\*.*;$(DirBuildTempWiki)\home.md;$(DirBuildTempWiki)\_*.md" />
+        </ItemGroup>
+
+        <Copy SourceFiles="@(WikiFiles)" 
+              DestinationFolder="$(DirBuildTempSrc)\pages\wiki\%(RecursiveDir)" />
+    </Target>
     
     <!-- Generate API documentation files in temp/src/pages/api -->
     
