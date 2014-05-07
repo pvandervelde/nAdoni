@@ -1,0 +1,79 @@
+<Project xmlns='http://schemas.microsoft.com/developer/msbuild/2003' 
+         ToolsVersion="4.0">
+    <!--
+        Changes a GitHub wiki page into a Champ markdown page
+        Define:
+        - WikiFiles: The file paths of the wiki markdown pages.
+        - PagePath: The directory path where the Champ markdown pages should be placed.
+        - TemplateName: The name of the Champ template that will be used for the page.
+    -->
+    <UsingTask TaskName="CreatePagesFromWiki" 
+               TaskFactory="CodeTaskFactory" 
+               AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <WikiFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+            <PagePath ParameterType="System.String" Required="true" />
+            <TemplateName ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Code Type="Method" Language="cs">
+                <![CDATA[
+                    public override bool Execute()
+                    {
+                        if (WikiFiles != null)
+                        {
+                            ITaskItem[] wikiFilePaths = WikiFiles;
+                            for (int i = 0; i < wikiFilePaths.Length; i++)
+                            {
+                                ITaskItem taskItem = wikiFilePaths[i];
+                                if (string.IsNullOrEmpty(taskItem.ItemSpec))
+                                {
+                                    continue;
+                                }
+                                
+                                var wikiFilePath = taskItem.ItemSpec;
+                                try
+                                {
+                                    string wikiPageText = string.Empty;
+                                    using (var reader = new StreamReader(wikiFilePath))
+                                    {
+                                        wikiPageText = reader.ReadToEnd();
+                                    }
+                                    
+                                    var directory = Path.Combine(PagePath, Path.GetFileNameWithoutExtension(wikiFilePath));
+                                    if (!Directory.Exists(directory))
+                                    {
+                                        Directory.CreateDirectory(directory);
+                                    }
+                                    
+                                    var fileName = Path.Combine(directory, "index" + Path.GetExtension(wikiFilePath));
+                                    using (var writer = new StreamWriter(fileName))
+                                    {
+                                        writer.WriteLine("<!--");
+                                        writer.WriteLine("template = " + TemplateName);
+                                        writer.WriteLine("title = " + Path.GetFileNameWithoutExtension(wikiFilePath));
+                                        writer.WriteLine("-->");
+                                        writer.Write(wikiPageText);
+                                        
+                                        writer.Flush();
+                                    }
+                                    
+                                    Log.LogMessage("Writing wiki page text from [{0}] to [{1}]", wikiFilePath, fileName);
+                                }
+                                catch(Exception e)
+                                {
+                                    Log.LogError(e.ToString()); 
+                                }
+                            }
+                        }
+
+                        // Log.HasLoggedErrors is true if the task logged any errors -- even if they were logged 
+                        // from a task's constructor or property setter. As long as this task is written to always log an error
+                        // when it fails, we can reliably return HasLoggedErrors.
+                        return !Log.HasLoggedErrors;
+                    }
+                ]]>  
+            </Code>
+        </Task>
+    </UsingTask>
+</Project>

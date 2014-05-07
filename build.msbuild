@@ -22,8 +22,8 @@
         <MsBuildExtensionsPath>$(DirTools)\msbuild.extensions</MsBuildExtensionsPath>
     </PropertyGroup>
     
-    <Import Project="$(MsBuildExtensionsPath)\CreatePageFromWiki.msbuild" 
-            Condition="Exists('$(MsBuildExtensionsPath)\CreatePageFromWiki.msbuild')" />
+    <Import Project="$(MsBuildExtensionsPath)\CreatePagesFromWiki.msbuild" 
+            Condition="Exists('$(MsBuildExtensionsPath)\CreatePagesFromWiki.msbuild')" />
     <Import Project="$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild" 
             Condition="Exists('$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild')" />
     <Import Project="$(MsBuildExtensionsPath)\Unzip.msbuild" 
@@ -82,9 +82,9 @@
                        Exclude="$(DirBuildTempWiki)\.git\**\*.*;$(DirBuildTempWiki)\home.md;$(DirBuildTempWiki)\_*.md" />
         </ItemGroup>
         
-        <CreatePageFromWiki WikiFile="@(WikiFiles)" 
-                            PageFile="@(WikiFiles->'$(DirBuildTempSrc)\pages\wiki\%(RecursiveDir)\%(Filename)\index.md')" 
-                            TemplateName="page" />
+        <CreatePagesFromWiki WikiFiles="@(WikiFiles)" 
+                             PagePath="$(DirBuildTempSrc)\pages\wiki" 
+                             TemplateName="page" />
     </Target>
     
     <!-- Generate API documentation files in temp/src/pages/api -->
