@@ -89,6 +89,30 @@ header h2 {
   letter-spacing: 0;
 }
 
+header #header-nav {
+    width: 100%;
+    margin: 1em 0 1em 0;
+    padding: 0;
+    list-style: none;
+}
+
+header #header-nav li {
+    display: inline;
+    float: left;
+}
+
+header #header-nav li a {
+    color: #9ddcff;
+    display: block;
+    padding: 8px 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header #header-nav li a:hover {
+    color: #fff;
+}
+
 .inner {
   position: relative;
   width: 940px;
