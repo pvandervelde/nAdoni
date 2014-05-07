@@ -22,12 +22,14 @@
         <MsBuildExtensionsPath>$(DirTools)\msbuild.extensions</MsBuildExtensionsPath>
     </PropertyGroup>
     
+    <Import Project="$(MsBuildExtensionsPath)\CreatePageFromWiki.msbuild" 
+            Condition="Exists('$(MsBuildExtensionsPath)\CreatePageFromWiki.msbuild')" />
     <Import Project="$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild" 
             Condition="Exists('$(MsBuildExtensionsPath)\FindToolFromPackages.msbuild')" />
     <Import Project="$(MsBuildExtensionsPath)\Unzip.msbuild" 
             Condition="Exists('$(MsBuildExtensionsPath)\Unzip.msbuild')" />
 
-    <Target Name="Run" DependsOnTargets="_Clean;_CopySourceFiles;_RetrieveWikiSource;_BuildSite">
+    <Target Name="Run" DependsOnTargets="_Clean;_CopySourceFiles;_RetrieveWikiSource;_CopyWikiSourceFiles;_BuildSite">
         <!-- Do nothing here -->
     </Target>
     
@@ -72,14 +74,17 @@
         <Exec Command="&quot;$(ExeGit)&quot; clone $(GitRepositoryWiki) $(DirBuildTempWiki)"
               WorkingDirectory="$(DirBuildTemp)" />
         <RemoveDir Directories="$(DirBuildTempWiki)\.git" />
-              
+    </Target>
+    
+    <Target Name="_CopyWikiSourceFiles" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles;_RetrieveWikiSource">
         <ItemGroup>
             <WikiFiles Include="$(DirBuildTempWiki)\**\*.*"
                        Exclude="$(DirBuildTempWiki)\.git\**\*.*;$(DirBuildTempWiki)\home.md;$(DirBuildTempWiki)\_*.md" />
         </ItemGroup>
-
-        <Copy SourceFiles="@(WikiFiles)" 
-              DestinationFolder="$(DirBuildTempSrc)\pages\wiki\%(RecursiveDir)" />
+        
+        <CreatePageFromWiki WikiFile="@(WikiFiles)" 
+                            PageFile="@(WikiFiles->'$(DirBuildTempSrc)\pages\wiki\%(RecursiveDir)\%(Filename)\index.md')" 
+                            TemplateName="page" />
     </Target>
     
     <!-- Generate API documentation files in temp/src/pages/api -->
@@ -88,7 +93,7 @@
     <PropertyGroup>
         <FileChampAppExe>champ-app.exe</FileChampAppExe>
     </PropertyGroup>
-    <Target Name="_BuildSite" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles">
+    <Target Name="_BuildSite" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles;_CopyWikiSourceFiles">
         <FindToolFromPackages PackagesDir="$(DirPackages)" FileToLocate="$(FileChampAppExe)">
           <Output TaskParameter="Path" PropertyName="PathChampAppExe" />
         </FindToolFromPackages>

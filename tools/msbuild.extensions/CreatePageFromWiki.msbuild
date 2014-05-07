@@ -1,0 +1,64 @@
+<Project xmlns='http://schemas.microsoft.com/developer/msbuild/2003' 
+         ToolsVersion="4.0">
+    <!--
+        Changes a GitHub wiki page into a Champ markdown page
+        Define:
+        - WikiFile: The file path of the wiki markdown page.
+        - PageFile: The file path of the Champ markdown page.
+        - TemplateName: The name of the Champ template that will be used for the page.
+    -->
+    <UsingTask TaskName="CreatePageFromWiki" 
+               TaskFactory="CodeTaskFactory" 
+               AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+        <ParameterGroup>
+            <WikiFile ParameterType="System.String" Required="true" />
+            <PageFile ParameterType="System.String" Required="true" />
+            <TemplateName ParameterType="System.String" Required="true" />
+        </ParameterGroup>
+        <Task>
+            <Code Type="Method" Language="cs">
+                <![CDATA[
+                    public override bool Execute()
+                    {
+                        try
+                        {
+                            string wikiPageText = string.Empty;
+                            using (var reader = new StreamReader(WikiFile))
+                            {
+                                wikiPageText = reader.ReadToEnd();
+                            }
+                            
+                            var directory = Path.GetDirectoryName(PageFile);
+                            if (!Directory.Exists(directory))
+                            {
+                                Directory.CreateDirectory(directory);
+                            }
+                            
+                            using (var writer = new StreamWriter(PageFile))
+                            {
+                                writer.WriteLine("<!--");
+                                writer.WriteLine("template = " + TemplateName);
+                                writer.WriteLine("title = " + Path.GetFileNameWithoutExtension(WikiFile));
+                                writer.WriteLine("-->");
+                                writer.Write(wikiPageText);
+                                
+                                writer.Flush();
+                            }
+                            
+                            Log.LogMessage("Writing wiki page text from [{0}] to [{1}]", WikiFile, PageFile);
+                        }
+                        catch(Exception e)
+                        {
+                            Log.LogError(e.ToString()); 
+                        }
+
+                        // Log.HasLoggedErrors is true if the task logged any errors -- even if they were logged 
+                        // from a task's constructor or property setter. As long as this task is written to always log an error
+                        // when it fails, we can reliably return HasLoggedErrors.
+                        return !Log.HasLoggedErrors;
+                    }
+                ]]>  
+            </Code>
+        </Task>
+    </UsingTask>
+</Project>
