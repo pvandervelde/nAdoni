@@ -96,6 +96,12 @@ header #header-nav {
     list-style: none;
 }
 
+header #header-nav ul li {
+    list-style: none;
+    padding-left: 0px;
+    padding-right: 15px;
+}
+
 header #header-nav li {
     display: inline;
     float: left;
@@ -104,7 +110,7 @@ header #header-nav li {
 header #header-nav li a {
     color: #9ddcff;
     display: block;
-    padding: 8px 15px;
+    padding: 8px 0px;
     text-decoration: none;
     font-weight: bold;
 }
@@ -146,6 +152,18 @@ aside#sidebar {
 aside#sidebar p.repo-owner,
 aside#sidebar p.repo-owner a {
   font-weight: bold;
+}
+
+aside#sidebar ul li {
+    list-style: none;
+    padding-left: 0px;
+}
+
+aside#sidebar li a {
+    display: block;
+    padding: 8px 0px;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 #downloads {
