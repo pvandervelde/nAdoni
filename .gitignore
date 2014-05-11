@@ -53,6 +53,10 @@ sql/
 ~$*
 *~
 
+node_modules/
+out/
+.docpad.db
+
 #############
 ## Windows detritus
 #############
