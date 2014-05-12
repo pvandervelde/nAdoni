@@ -1,0 +1,10 @@
+---
+title: 'Home'
+isPage: true
+order: 1
+---
+<% for page in @getCollection("posts").toJSON(): %>
+    <div id="post-spacer">
+    <%- @partial('post-content', {post: page})%>
+    </div>
+<% end %>

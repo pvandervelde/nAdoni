@@ -47,7 +47,7 @@
         -->
         <ItemGroup>
             <BuildFilesToDelete Include="$(DirBuild)\**\*.*"
-                                Exclude="$(DirBuildTempWiki)\**\*.*"/>
+                                Exclude="$(DirBuildTempWiki)\**\*.*;$(DirBuildTemp)\node_modules\**\*.*"/>
         </ItemGroup>
         <Delete Files="@(BuildFilesToDelete)" />
     </Target>
@@ -60,11 +60,20 @@
         <MakeDir Directories="$(DirBuildTemp)" Condition="!Exists('$(DirBuildTemp)')" />
         
         <ItemGroup>
-            <SrcFiles Include="$(DirSrc)\**\*.*" />
+            <SrcFiles Include="$(DirSrc)\**\*.*"
+                      Exclude="$(DirSrc)\docpad.coffee;$(DirSrc)\package.json" />
         </ItemGroup>
         
         <Copy SourceFiles="@(SrcFiles)" 
               DestinationFolder="$(DirBuildTempSrc)\%(RecursiveDir)" />
+              
+        <ItemGroup>
+            <GeneratorFiles Include="$(DirSrc)\docpad.coffee" />
+            <GeneratorFiles Include="$(DirSrc)\package.json" />
+        </ItemGroup>
+        
+        <Copy SourceFiles="@(GeneratorFiles)" 
+              DestinationFolder="$(DirBuildTemp)\%(RecursiveDir)" />
     </Target>
     
     <PropertyGroup>
@@ -83,22 +92,23 @@
         </ItemGroup>
         
         <CreatePagesFromWiki WikiFiles="@(WikiFiles)" 
-                             PagePath="$(DirBuildTempSrc)\pages\wiki" 
-                             TemplateName="page" />
+                             PagePath="$(DirBuildTempSrc)\documents\wiki" />
     </Target>
     
     <!-- Generate API documentation files in temp/src/pages/api -->
     
     <!-- Generate site -->
     <PropertyGroup>
-        <FileChampAppExe>champ-app.exe</FileChampAppExe>
+        <FileGeneratorExe>docpad</FileGeneratorExe>
     </PropertyGroup>
     <Target Name="_BuildSite" DependsOnTargets="_DisplayInfo;_Clean;_CopySourceFiles;_CopyWikiSourceFiles">
-        <FindToolFromPackages PackagesDir="$(DirPackages)" FileToLocate="$(FileChampAppExe)">
-          <Output TaskParameter="Path" PropertyName="PathChampAppExe" />
-        </FindToolFromPackages>
+        <MakeDir Directories="$(DirBuildDeploy)" Condition="!Exists('$(DirBuildDeploy)')" />
         
-        <Exec Command="$(PathChampAppExe) $(DirBuildTempSrc) $(DirBuildDeploy)"
-              WorkingDirectory="$(DirBuildTempSrc)" />
+        <Exec Command="npm install"
+              WorkingDirectory="$(DirBuildTemp)" />
+        
+        <Message Text="Generating site ..." />
+        <Exec Command="$(FileGeneratorExe) generate --out &quot;$(DirBuildDeploy)&quot; -d"
+              WorkingDirectory="$(DirBuildTemp)" />
     </Target>
 </Project>

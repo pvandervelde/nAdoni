@@ -13,7 +13,6 @@
         <ParameterGroup>
             <WikiFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
             <PagePath ParameterType="System.String" Required="true" />
-            <TemplateName ParameterType="System.String" Required="true" />
         </ParameterGroup>
         <Task>
             <Code Type="Method" Language="cs">
@@ -46,13 +45,12 @@
                                         Directory.CreateDirectory(directory);
                                     }
                                     
-                                    var fileName = Path.Combine(directory, "index" + Path.GetExtension(wikiFilePath));
+                                    var fileName = Path.Combine(directory, "index.html" + Path.GetExtension(wikiFilePath));
                                     using (var writer = new StreamWriter(fileName))
                                     {
-                                        writer.WriteLine("<!--");
-                                        writer.WriteLine("template = " + TemplateName);
-                                        writer.WriteLine("title = " + Path.GetFileNameWithoutExtension(wikiFilePath));
-                                        writer.WriteLine("-->");
+                                        writer.WriteLine("---");
+                                        writer.WriteLine("title: " + Path.GetFileNameWithoutExtension(wikiFilePath));
+                                        writer.WriteLine("---");
                                         writer.Write(wikiPageText);
                                         
                                         writer.Flush();

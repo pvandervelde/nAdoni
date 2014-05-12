@@ -1,0 +1,12 @@
+---
+layout: "default"
+---
+
+<div id="post">
+    <%- @partial('post-content', {post: @document})%>
+    <div id="post-footer">
+        <div>
+            <%- @getNavLinks() %>
+        </div>
+    </div>
+</div>

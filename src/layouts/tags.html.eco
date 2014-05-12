@@ -1,0 +1,12 @@
+---
+layout: default
+---
+
+<div id="posts">
+    <h3 id="post-tags-header">Posts tagged with: <%= @document.tag %></h3>
+    <% for post in @getCollection('documents').findAll({tags: '$in': @document.tag}, [date:-1]).toJSON(): %>
+        <div id="post-spacer">
+            <%- @partial('post-content', {post: post})%>
+        </div>
+    <% end %>
+</div>
