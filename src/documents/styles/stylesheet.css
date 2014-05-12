@@ -89,6 +89,10 @@ header h2 {
   letter-spacing: 0;
 }
 
+header a {
+  color: #fff;
+}
+
 header #header-nav {
     width: 100%;
     margin: 1em 0 1em 0;
@@ -165,13 +169,6 @@ aside#sidebar #sbox2
 aside#sidebar #sbox3
 {
     overflow: hidden;
-    margin-bottom: 50px;
-    border-bottom: 1px solid #D4D4D4;
-}
-
-aside#sidebar #sbox4
-{
-    overflow: hidden;
 }
 
 aside#sidebar #sbox4  a{
@@ -218,14 +215,6 @@ header a.button {
   right: 0;
   top: 0;
   background: transparent url(../images/github-button.png) 0 0 no-repeat;
-}
-aside a.button {
-  width: 138px;
-  padding-left: 64px;
-  display: block;
-  background: transparent url(../images/download-button.png) 0 0 no-repeat;
-  margin-bottom: 20px;
-  font-size: 21px;
 }
 
 code, pre {

@@ -73,7 +73,6 @@ docpadConfig = {
             styles: [
                 '/styles/stylesheet.css'
                 '/styles/pygment_trac.css'
-                '/styles/print.css'
             ]
 
             # The website's scripts

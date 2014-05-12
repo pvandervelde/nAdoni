@@ -19,6 +19,7 @@
     <%- @getBlock('meta').toHTML() %>
 
     <!-- DocPad Styles + Our Own -->
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <%- @getBlock('styles').add(@site.styles).toHTML() %>
     
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -51,27 +52,26 @@
     
     <div id="content-wrapper">
         <aside>
-            <div id="sbox1">
-                <%- @partial('sidebar_about') %>
-            </div>
-            <div id="sbox2">
-                <%- @partial('sidebar_links') %>
-            </div
-            <div id="sbox3">
-                <h2>Recent</h2>
-                <ul>
-                    <% for recent in @getCollection("frontpage").toJSON()[0..9]: %>
-                        <li><a href="<%= recent.url %>"><%= recent.title %></a></li>
+            <div id="sidebar">
+                <div id="sbox1">
+                    <%- @partial('sidebar_links') %>
+                </div>
+                <div id="sbox2">
+                    <h2>Recent</h2>
+                    <ul>
+                        <% for recent in @getCollection("frontpage").toJSON()[0..9]: %>
+                            <li><a href="<%= recent.url %>"><%= recent.title %></a></li>
+                        <% end %>
+                    </ul>
+                </div>
+                <div id="sbox3">
+                    <h2>Tags</h2>
+                    <% for tag, data of @getTagCloud(): %>
+                        <a href="<%= data.url %>" style="font-size: <%- 100 + data.weight * 50 %>%">
+                            <%= tag %>
+                        </a>
                     <% end %>
-                </ul>
-            </div>
-            <div id="sbox4">
-                <h2>Tags</h2>
-                <% for tag, data of @getTagCloud(): %>
-                    <a href="<%= data.url %>" style="font-size: <%- 100 + data.weight * 50 %>%">
-                        <%= tag %>
-                    </a>
-                <% end %>
+                </div>
             </div>
         </aside>
         <section id="main-content">
