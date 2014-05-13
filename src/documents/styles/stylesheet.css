@@ -100,9 +100,19 @@ header #header-nav {
     list-style: none;
 }
 
+header #header-nav .active {
+    background: #fff;
+    border-radius: 5px;
+    color: #9ddcff;
+}
+
+header #header-nav .inactive {
+    color: #fff;
+}
+
 header #header-nav ul li {
     list-style: none;
-    padding-left: 0px;
+    padding-left: 15px;
     padding-right: 15px;
 }
 
@@ -134,16 +144,7 @@ header #header-nav li a:hover {
   padding-top: 30px;
 }
 
-#main-content {
-  width: 690px;
-  float: left;
-}
-
-#main-content img {
-  max-width: 100%;
-}
-
-aside#sidebar {
+#sidebar {
   width: 200px;
   padding-left: 20px;
   min-height: 504px;
@@ -153,43 +154,52 @@ aside#sidebar {
   line-height: 1.3;
 }
 
-aside#sidebar #sbox1
+#sidebar #sbox1
 {
     margin-bottom: 40px;
     border-bottom: 1px solid #D4D4D4;
 }
 
-aside#sidebar #sbox2
+#sidebar #sbox2
 {
     overflow: hidden;
     margin-bottom: 50px;
     border-bottom: 1px solid #D4D4D4;
 }
 
-aside#sidebar #sbox3
+#sidebar #sbox3
 {
     overflow: hidden;
 }
 
-aside#sidebar #sbox4  a{
+#sidebar #sbox4  a{
     color: #2B2B2B;
 }
 
-aside#sidebar p.repo-owner,
-aside#sidebar p.repo-owner a {
+#sidebar p.repo-owner,
+#sidebar p.repo-owner a {
   font-weight: bold;
 }
 
-aside#sidebar ul li {
+#sidebar ul li {
     list-style: none;
     padding-left: 0px;
 }
 
-aside#sidebar li a {
+#sidebar li a {
     display: block;
     padding: 8px 0px;
     text-decoration: none;
     font-weight: bold;
+}
+
+#main-content {
+  width: 690px;
+  padding: 70px 50px 50px 50px;
+}
+
+#main-content img {
+  max-width: 100%;
 }
 
 #downloads {
@@ -400,7 +410,7 @@ dl dd {
   font-weight: 100;
 }
 
-footer {
+#footer {
   border-top: solid 1px #275da1;
   background: #2e7bcf url(../images/header-bg.jpg) 0 0 repeat-x;
   #background: transparent url('../images/hr.png') 0 0 no-repeat;
@@ -411,81 +421,81 @@ footer {
   color: #aaa;
 }
 
-footer a {
+#footer a {
   color: #666;
 }
-footer a:hover {
+#footer a:hover {
   color: #444;
 }
 
-footer h2
+#footer h2
 {
     padding: 30px 0px 20px 0px;
     font-weight: 400;
     color: #D3D3D3;
 }
 
-footer p {
+#footer p {
     color: #4E4E4E;
 }
 
-footer #fbox1 {
+#footer #fbox1 {
     float: left;
     width: 260px;
     margin-right: 60px;
 }
 
-footer #fbox1 ul{
+#footer #fbox1 ul{
     margin: 0px;
     padding: 0px;
     list-style: none;
 }
 
-footer #fbox1 ul li{
+#footer #fbox1 ul li{
     padding: 10px 0px 20px 0px;
     border-top: 1px solid #242424;
 }
 
-footer #fbox1 #first {
+#footer #fbox1 #first {
     padding-top: 0px;
     border-top: none;
 }
 
-footer #fbox2 {
+#footer #fbox2 {
     float: right;
     width: 260px;
 }
 
-footer #fbox2  ul{
+#footer #fbox2  ul{
     margin: 30px 0px 0px 0px;
     padding: 0px;
     list-style: none;
 }
 
-footer #fbox2  ul li{
+#footer #fbox2  ul li{
     float: left;
     margin-right: 10px;
 }
 
-footer #fbox3 {
+#footer #fbox3 {
     float: right;
     width: 260px;
 }
 
-footer#copyright
+#copyright
 {
     overflow: hidden;
     width: 900px;
     padding: 50px;
 }
 
-footer#copyright p
+#copyright p
 {
     text-align: center;
     text-shadow: 1px 1px 1px rgba(0,0,0,1);
 }
 
-footer#copyright a
+#copyright a
 {
     color: #4E4E4E;
 }
