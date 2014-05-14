@@ -63,7 +63,7 @@ a:hover {
   color: #2268b2;
 }
 
-header {
+#header {
   padding-top: 40px;
   padding-bottom: 40px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
@@ -71,7 +71,7 @@ header {
   border-bottom: solid 1px #275da1;
 }
 
-header h1 {
+#header h1 {
   letter-spacing: -1px;
   font-size: 72px;
   color: #fff;
@@ -80,7 +80,7 @@ header h1 {
   width: 540px;
 }
 
-header h2 {
+#header h2 {
   font-size: 26px;
   color: #9ddcff;
   font-weight: normal;
@@ -89,39 +89,39 @@ header h2 {
   letter-spacing: 0;
 }
 
-header a {
+#header a {
   color: #fff;
 }
 
-header #header-nav {
+#header #header-nav {
     width: 100%;
     margin: 1em 0 1em 0;
     padding: 0;
     list-style: none;
 }
 
-header #header-nav .active {
+#header #header-nav .active {
     background: #fff;
     border-radius: 5px;
     color: #9ddcff;
 }
 
-header #header-nav .inactive {
+#header #header-nav .inactive {
     color: #fff;
 }
 
-header #header-nav ul li {
+#header #header-nav ul li {
     list-style: none;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-header #header-nav li {
+#header #header-nav li {
     display: inline;
     float: left;
 }
 
-header #header-nav li a {
+#header #header-nav li a {
     color: #9ddcff;
     display: block;
     padding: 8px 0px;
@@ -129,7 +129,7 @@ header #header-nav li a {
     font-weight: bold;
 }
 
-header #header-nav li a:hover {
+#header #header-nav li a:hover {
     color: #fff;
 }
 
@@ -220,7 +220,7 @@ a.button small {
   display: block;
   font-size: 11px;
 }
-header a.button {
+#header a.button {
   position: absolute;
   right: 0;
   top: 0;
@@ -414,18 +414,19 @@ dl dd {
   border-top: solid 1px #275da1;
   background: #2e7bcf url(../images/header-bg.jpg) 0 0 repeat-x;
   #background: transparent url('../images/hr.png') 0 0 no-repeat;
+  overflow: hidden;
   margin-top: 40px;
   padding-top: 20px;
   padding-bottom: 30px;
   font-size: 13px;
-  color: #aaa;
+  color: #9ddcff;
 }
 
 #footer a {
-  color: #666;
+  color: #9ddcff;
 }
 #footer a:hover {
-  color: #444;
+  color: #ffffff;
 }
 
 #footer h2
@@ -436,7 +437,11 @@ dl dd {
 }
 
 #footer p {
-    color: #4E4E4E;
+    color: #9ddcff;
+}
+
+#footer ul li {
+    list-style: none;
 }
 
 #footer #fbox1 {
@@ -485,19 +490,17 @@ dl dd {
 #copyright
 {
     overflow: hidden;
-    width: 900px;
-    padding: 50px;
+    padding: 10px;
 }
 
 #copyright p
 {
     text-align: center;
-    text-shadow: 1px 1px 1px rgba(0,0,0,1);
 }
 
 #copyright a
 {
-    color: #4E4E4E;
+    color: #9ddcff;
 }
 
 /* MISC */
@@ -524,13 +527,13 @@ dl dd {
   .inner {
     width: 740px;
   }
-  header h1, header h2 {
+  #header h1, #header h2 {
     width: 340px;
   }
-  header h1 {
+  #header h1 {
     font-size: 60px;
   }
-  header h2 {
+  #header h2 {
     font-size: 30px;
   }
   #main-content {
@@ -553,22 +556,22 @@ dl dd {
   .inner {
     width: 93%;
   }
-  header {
+  #header {
     padding: 20px 0;
   }
-  header .inner {
+  #header .inner {
     position: relative;
   }
-  header h1, header h2 {
+  #header h1, #header h2 {
     width: 100%;
   }
-  header h1 {
+  #header h1 {
     font-size: 48px;
   }
-  header h2 {
+  #header h2 {
     font-size: 24px;
   }
-  header a.button {
+  #header a.button {
     background-image: none;
     width: auto;
     height: auto;
@@ -585,23 +588,23 @@ dl dd {
     -webkit-border-radius: 5px;                     
     border-radius: 5px;    
   }
-  header a.button small {
+  #header a.button small {
     font-size: 13px;
     display: inline;
   }
   #main-content,
-  aside#sidebar {
+  #sidebar {
     float: none;
     width: 100% ! important;
   }
-  aside#sidebar {
+  #sidebar {
     background-image: none;
     margin-top: 20px;
     border-top: solid 1px #ddd;
     padding: 20px 0;
     min-height: 0;
   }
-  aside#sidebar a.button {
+  #sidebar a.button {
     display: none;
   }
   #main-content h1:before,
