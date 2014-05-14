@@ -13,6 +13,7 @@
         <ParameterGroup>
             <WikiFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
             <PagePath ParameterType="System.String" Required="true" />
+            <Layout ParameterType="System.String" Required="true" />
         </ParameterGroup>
         <Task>
             <Code Type="Method" Language="cs">
@@ -50,6 +51,7 @@
                                     {
                                         writer.WriteLine("---");
                                         writer.WriteLine("title: " + Path.GetFileNameWithoutExtension(wikiFilePath));
+                                        writer.WriteLine("layout: " + Layout);
                                         writer.WriteLine("---");
                                         writer.Write(wikiPageText);
                                         

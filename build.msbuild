@@ -92,7 +92,8 @@
         </ItemGroup>
         
         <CreatePagesFromWiki WikiFiles="@(WikiFiles)" 
-                             PagePath="$(DirBuildTempSrc)\documents\wiki" />
+                             PagePath="$(DirBuildTempSrc)\documents\wiki"
+                             Layout="wiki" />
     </Target>
     
     <!-- Generate API documentation files in temp/src/pages/api -->
