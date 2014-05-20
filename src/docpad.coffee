@@ -71,8 +71,8 @@ docpadConfig = {
             
             # The website's styles
             styles: [
-                '/styles/stylesheet.css'
-                '/styles/pygment_trac.css'
+                'styles/stylesheet.css'
+                'styles/pygment_trac.css'
             ]
 
             # The website's scripts
