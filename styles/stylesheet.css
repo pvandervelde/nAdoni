@@ -63,7 +63,7 @@ a:hover {
   color: #2268b2;
 }
 
-header {
+#header {
   padding-top: 40px;
   padding-bottom: 40px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif; 
@@ -71,7 +71,7 @@ header {
   border-bottom: solid 1px #275da1;
 }
 
-header h1 {
+#header h1 {
   letter-spacing: -1px;
   font-size: 72px;
   color: #fff;
@@ -80,7 +80,7 @@ header h1 {
   width: 540px;
 }
 
-header h2 {
+#header h2 {
   font-size: 26px;
   color: #9ddcff;
   font-weight: normal;
@@ -89,9 +89,53 @@ header h2 {
   letter-spacing: 0;
 }
 
+#header a {
+  color: #fff;
+}
+
+#header #header-nav {
+    width: 100%;
+    margin: 1em 0 1em 0;
+    padding: 0;
+    list-style: none;
+}
+
+#header #header-nav .active {
+    background: #fff;
+    border-radius: 5px;
+    color: #9ddcff;
+}
+
+#header #header-nav .inactive {
+    color: #fff;
+}
+
+#header #header-nav ul li {
+    list-style: none;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#header #header-nav li {
+    display: inline;
+    float: left;
+}
+
+#header #header-nav li a {
+    color: #9ddcff;
+    display: block;
+    padding: 8px 0px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#header #header-nav li a:hover {
+    color: #fff;
+}
+
 .inner {
   position: relative;
-  width: 940px;
+  width: 1030px;
   margin: 0 auto;
 }
 
@@ -100,28 +144,61 @@ header h2 {
   padding-top: 30px;
 }
 
-#main-content {
-  width: 690px;
-  float: left;
-}
-
-#main-content img {
-  max-width: 100%;
-}
-
-aside#sidebar {
+#sidebar {
   width: 200px;
   padding-left: 20px;
   min-height: 504px;
   float: right;
-  background: transparent url(../images/sidebar-bg.jpg) 0 0 no-repeat;
   font-size: 12px;
   line-height: 1.3;
 }
 
-aside#sidebar p.repo-owner,
-aside#sidebar p.repo-owner a {
+#sidebar #sbox1
+{
+    margin-bottom: 40px;
+    border-bottom: 1px solid #D4D4D4;
+}
+
+#sidebar #sbox2
+{
+    overflow: hidden;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #D4D4D4;
+}
+
+#sidebar #sbox3
+{
+    overflow: hidden;
+}
+
+#sidebar #sbox4  a{
+    color: #2B2B2B;
+}
+
+#sidebar p.repo-owner,
+#sidebar p.repo-owner a {
   font-weight: bold;
+}
+
+#sidebar ul li {
+    list-style: none;
+    padding-left: 0px;
+}
+
+#sidebar li a {
+    display: block;
+    padding: 8px 0px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#main-content {
+  width: 690px;
+  padding: 0px 50px 50px 50px;
+}
+
+#main-content img {
+  max-width: 100%;
 }
 
 #downloads {
@@ -142,19 +219,11 @@ a.button small {
   display: block;
   font-size: 11px;
 }
-header a.button {
+#header a.button {
   position: absolute;
   right: 0;
   top: 0;
   background: transparent url(../images/github-button.png) 0 0 no-repeat;
-}
-aside a.button {
-  width: 138px;
-  padding-left: 64px;
-  display: block;
-  background: transparent url(../images/download-button.png) 0 0 no-repeat;
-  margin-bottom: 20px;
-  font-size: 21px;
 }
 
 code, pre {
@@ -340,20 +409,97 @@ dl dd {
   font-weight: 100;
 }
 
-footer {
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
+#footer {
+  border-top: solid 1px #275da1;
+  background: #2e7bcf url(../images/header-bg.jpg) 0 0 repeat-x;
+  #background: transparent url('../images/hr.png') 0 0 no-repeat;
+  overflow: hidden;
   margin-top: 40px;
   padding-top: 20px;
   padding-bottom: 30px;
   font-size: 13px;
-  color: #aaa;
+  color: #9ddcff;
 }
 
-footer a {
-  color: #666;
+#footer a {
+  color: #9ddcff;
 }
-footer a:hover {
-  color: #444;
+#footer a:hover {
+  color: #ffffff;
+}
+
+#footer h2
+{
+    padding: 30px 0px 20px 0px;
+    font-weight: 400;
+    color: #D3D3D3;
+}
+
+#footer p {
+    color: #9ddcff;
+}
+
+#footer ul li {
+    list-style: none;
+}
+
+#footer #fbox1 {
+    float: left;
+    width: 260px;
+    margin-right: 60px;
+}
+
+#footer #fbox1 ul{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+#footer #fbox1 ul li{
+    padding: 10px 0px 20px 0px;
+    border-top: 1px solid #242424;
+}
+
+#footer #fbox1 #first {
+    padding-top: 0px;
+    border-top: none;
+}
+
+#footer #fbox2 {
+    float: right;
+    width: 260px;
+}
+
+#footer #fbox2  ul{
+    margin: 30px 0px 0px 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+#footer #fbox2  ul li{
+    float: left;
+    margin-right: 10px;
+}
+
+#footer #fbox3 {
+    float: right;
+    width: 260px;
+}
+
+#copyright
+{
+    overflow: hidden;
+    padding: 10px;
+}
+
+#copyright p
+{
+    text-align: center;
+}
+
+#copyright a
+{
+    color: #9ddcff;
 }
 
 /* MISC */
@@ -380,13 +526,13 @@ footer a:hover {
   .inner {
     width: 740px;
   }
-  header h1, header h2 {
+  #header h1, #header h2 {
     width: 340px;
   }
-  header h1 {
+  #header h1 {
     font-size: 60px;
   }
-  header h2 {
+  #header h2 {
     font-size: 30px;
   }
   #main-content {
@@ -409,22 +555,22 @@ footer a:hover {
   .inner {
     width: 93%;
   }
-  header {
+  #header {
     padding: 20px 0;
   }
-  header .inner {
+  #header .inner {
     position: relative;
   }
-  header h1, header h2 {
+  #header h1, #header h2 {
     width: 100%;
   }
-  header h1 {
+  #header h1 {
     font-size: 48px;
   }
-  header h2 {
+  #header h2 {
     font-size: 24px;
   }
-  header a.button {
+  #header a.button {
     background-image: none;
     width: auto;
     height: auto;
@@ -441,23 +587,23 @@ footer a:hover {
     -webkit-border-radius: 5px;                     
     border-radius: 5px;    
   }
-  header a.button small {
+  #header a.button small {
     font-size: 13px;
     display: inline;
   }
   #main-content,
-  aside#sidebar {
+  #sidebar {
     float: none;
     width: 100% ! important;
   }
-  aside#sidebar {
+  #sidebar {
     background-image: none;
     margin-top: 20px;
     border-top: solid 1px #ddd;
     padding: 20px 0;
     min-height: 0;
   }
-  aside#sidebar a.button {
+  #sidebar a.button {
     display: none;
   }
   #main-content h1:before,
